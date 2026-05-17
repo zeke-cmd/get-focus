@@ -172,3 +172,25 @@ export function useDatabase(): Database {
   if (!ctx) throw new Error('useDatabase must be used within DatabaseProvider');
   return ctx;
 }
+
+export function resetAllData(): void {
+  expoDb.execSync(`
+    DELETE FROM user_profile;
+    DELETE FROM widget_preferences;
+    DELETE FROM tasks;
+    DELETE FROM notes;
+    DELETE FROM bookmarks;
+    DELETE FROM focus_intentions;
+    DELETE FROM journal_entries;
+    DELETE FROM habits;
+    DELETE FROM habit_entries;
+    DELETE FROM pomodoro_sessions;
+    DELETE FROM pomodoro_settings;
+    DELETE FROM gym_exercises;
+    DELETE FROM gym_workouts;
+    DELETE FROM gym_sets;
+    DELETE FROM weekly_streaks;
+    DELETE FROM app_settings;
+    INSERT OR IGNORE INTO pomodoro_settings (id) VALUES (1);
+  `);
+}

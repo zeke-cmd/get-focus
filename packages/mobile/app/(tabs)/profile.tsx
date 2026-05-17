@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme, fonts, type ThemeMode } from '../../lib/theme';
-import { useDatabase } from '../../db/client';
+import { useDatabase, resetAllData } from '../../db/client';
 import { userProfile, appSettings } from '../../db/schema';
 import { eq } from 'drizzle-orm';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
@@ -18,8 +19,10 @@ import {
   Upload,
   Info,
   ChevronRight,
+  RotateCcw,
 } from 'lucide-react-native';
 import { haptic } from '../../lib/haptics';
+import { authenticateForReset } from '../../lib/pin';
 import type { QuoteSource } from '../../lib/quote-sources';
 
 export default function ProfileScreen() {
@@ -71,6 +74,28 @@ export default function ProfileScreen() {
   const handleThemeChange = (m: ThemeMode) => {
     haptic.selection();
     setMode(m);
+  };
+
+  const handleReset = () => {
+    haptic.light();
+    Alert.alert(
+      'reset app',
+      'this will erase all data and return to onboarding. this cannot be undone.',
+      [
+        { text: 'cancel', style: 'cancel' },
+        {
+          text: 'reset',
+          style: 'destructive',
+          onPress: async () => {
+            const ok = await authenticateForReset();
+            if (!ok) return;
+            resetAllData();
+            await AsyncStorage.clear();
+            router.replace('/(onboarding)/welcome');
+          },
+        },
+      ],
+    );
   };
 
   return (
@@ -194,13 +219,10 @@ export default function ProfileScreen() {
                 { icon: Shield, label: 'pin lock', desc: 'secure your app', route: '/(modals)/pin-setup' as const },
                 { icon: Download, label: 'export data', desc: 'save your data as json', route: '/(modals)/export-import' as const },
                 { icon: Upload, label: 'import data', desc: 'restore from backup', route: '/(modals)/export-import' as const },
-              ].map((item, i) => (
+              ].map((item) => (
                 <Pressable
                   key={item.label}
-                  style={[
-                    styles.settingRow,
-                    i < 2 && { borderBottomWidth: 1, borderBottomColor: colors.border },
-                  ]}
+                  style={[styles.settingRow, { borderBottomWidth: 1, borderBottomColor: colors.border }]}
                   onPress={() => {
                     haptic.light();
                     router.push(item.route);
@@ -218,6 +240,18 @@ export default function ProfileScreen() {
                   <ChevronRight size={16} color={colors.mutedForeground} strokeWidth={1.5} />
                 </Pressable>
               ))}
+              <Pressable style={styles.settingRow} onPress={handleReset}>
+                <RotateCcw size={18} color={colors.destructive} strokeWidth={1.5} />
+                <View style={{ flex: 1 }}>
+                  <Text style={[styles.settingLabel, { color: colors.destructive, fontFamily: fonts.body }]}>
+                    reset app
+                  </Text>
+                  <Text style={[styles.settingDesc, { color: colors.mutedForeground, fontFamily: fonts.body }]}>
+                    erase all data and start over
+                  </Text>
+                </View>
+                <ChevronRight size={16} color={colors.mutedForeground} strokeWidth={1.5} />
+              </Pressable>
             </View>
           </CardContent>
         </Card>
