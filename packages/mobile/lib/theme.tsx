@@ -7,43 +7,73 @@ export type ThemeMode = 'light' | 'dark' | 'system';
 export interface ThemeColors {
   background: string;
   foreground: string;
-  muted: string;
-  mutedForeground: string;
-  border: string;
   card: string;
   cardForeground: string;
+  primary: string;
+  primaryForeground: string;
+  secondary: string;
+  secondaryForeground: string;
+  muted: string;
+  mutedForeground: string;
+  accent: string;
+  accentForeground: string;
+  destructive: string;
+  border: string;
+  input: string;
+  ring: string;
   chart1: string;
   chart2: string;
   chart3: string;
   chart4: string;
+  chart5: string;
 }
 
 const lightColors: ThemeColors = {
   background: '#FFFFFF',
   foreground: '#000000',
-  muted: '#F5F5F5',
-  mutedForeground: '#737373',
-  border: '#E3E3E3',
   card: '#FFFFFF',
   cardForeground: '#000000',
+  primary: '#000000',
+  primaryForeground: '#FFFFFF',
+  secondary: '#F5F5F5',
+  secondaryForeground: '#000000',
+  muted: '#F5F5F5',
+  mutedForeground: '#737373',
+  accent: '#F5F5F5',
+  accentForeground: '#000000',
+  destructive: '#000000',
+  border: '#E3E3E3',
+  input: '#E3E3E3',
+  ring: '#000000',
   chart1: '#000000',
   chart2: '#333333',
   chart3: '#666666',
   chart4: '#999999',
+  chart5: '#CCCCCC',
 };
 
 const darkColors: ThemeColors = {
   background: '#000000',
   foreground: '#FFFFFF',
-  muted: '#1A1A1A',
-  mutedForeground: '#A6A6A6',
-  border: '#333333',
   card: '#000000',
   cardForeground: '#FFFFFF',
+  primary: '#FFFFFF',
+  primaryForeground: '#000000',
+  secondary: '#000000',
+  secondaryForeground: '#FFFFFF',
+  muted: '#1A1A1A',
+  mutedForeground: '#A6A6A6',
+  accent: '#1A1A1A',
+  accentForeground: '#FFFFFF',
+  destructive: '#FFFFFF',
+  border: '#333333',
+  input: '#333333',
+  ring: '#FFFFFF',
   chart1: '#FFFFFF',
   chart2: '#CCCCCC',
   chart3: '#999999',
   chart4: '#666666',
+  chart5: '#333333',
 };
 
 export const fonts = {
