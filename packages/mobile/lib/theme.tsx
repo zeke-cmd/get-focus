@@ -57,7 +57,7 @@ const darkColors: ThemeColors = {
   foreground: '#FAFAFA',
   card: '#000000',
   cardForeground: '#FAFAFA',
-  primary: '#404040',
+  primary: '#525252',
   primaryForeground: '#FAFAFA',
   secondary: '#000000',
   secondaryForeground: '#FAFAFA',

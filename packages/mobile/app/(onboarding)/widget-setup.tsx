@@ -7,10 +7,7 @@ import { Toggle } from '../../components/ui/Toggle';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { ProgressIndicator } from '../../components/ui/ProgressIndicator';
-import { WIDGETS, getDefaultWidgetPreferences } from '../../lib/widget-registry';
-import { useDatabase } from '../../db/client';
-import { userProfile, widgetPreferences } from '../../db/schema';
-import { setOnboardingComplete } from '../../lib/storage';
+import { WIDGETS } from '../../lib/widget-registry';
 import {
   Target,
   Timer,
@@ -35,79 +32,39 @@ const ICON_MAP: Record<string, React.ComponentType<any>> = {
 export default function WidgetSetupScreen() {
   const router = useRouter();
   const { colors } = useTheme();
-  const db = useDatabase();
-  const params = useLocalSearchParams<{
-    name: string;
-    dob: string;
-    gender: string;
-    email: string;
-    analyticsConsent: string;
-  }>();
+  const params = useLocalSearchParams<{ name: string; dob: string; gender: string }>();
 
   const [enabled, setEnabled] = useState<Record<string, boolean>>(
     Object.fromEntries(WIDGETS.map((w) => [w.id, w.defaultEnabled]))
   );
-  const [loading, setLoading] = useState(false);
 
   const toggleWidget = (id: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setEnabled((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const handleFinish = async () => {
-    setLoading(true);
-    try {
-      const profileValues = {
-        id: 1,
-        name: params.name || 'user',
-        dob: params.dob || '2000-01-01',
-        gender: params.gender || 'prefer not to say',
-        email: params.email || null,
-        analyticsConsent: params.analyticsConsent === '1',
-        createdAt: new Date().toISOString(),
-      };
-      await db
-        .insert(userProfile)
-        .values(profileValues)
-        .onConflictDoUpdate({
-          target: userProfile.id,
-          set: {
-            name: profileValues.name,
-            dob: profileValues.dob,
-            gender: profileValues.gender,
-            email: profileValues.email,
-            analyticsConsent: profileValues.analyticsConsent,
-          },
-        });
+  const enabledIdsCsv = () =>
+    WIDGETS.filter((w) => enabled[w.id] ?? w.defaultEnabled)
+      .map((w) => w.id)
+      .join(',');
 
-      // save widget preferences
-      for (let i = 0; i < WIDGETS.length; i++) {
-        const w = WIDGETS[i];
-        const prefValues = {
-          id: w.id,
-          enabled: enabled[w.id] ?? true,
-          sortOrder: i,
-        };
-        await db
-          .insert(widgetPreferences)
-          .values(prefValues)
-          .onConflictDoUpdate({
-            target: widgetPreferences.id,
-            set: { enabled: prefValues.enabled, sortOrder: prefValues.sortOrder },
-          });
-      }
+  const defaultEnabledIdsCsv = () =>
+    WIDGETS.filter((w) => w.defaultEnabled).map((w) => w.id).join(',');
 
-      // mark onboarding complete
-      await setOnboardingComplete(true);
-
-      // navigate to tabs
-      router.replace('/(tabs)');
-    } catch (e) {
-      console.error('onboarding save error:', e);
-    } finally {
-      setLoading(false);
-    }
+  const goToConsent = (widgetCsv: string) => {
+    router.push({
+      pathname: '/(onboarding)/consent',
+      params: {
+        name: params.name,
+        dob: params.dob,
+        gender: params.gender,
+        widgets: widgetCsv,
+      },
+    });
   };
+
+  const handleContinue = () => goToConsent(enabledIdsCsv());
+  const handleUseDefaults = () => goToConsent(defaultEnabledIdsCsv());
 
   return (
     <SafeAreaView
@@ -116,7 +73,7 @@ export default function WidgetSetupScreen() {
     >
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.header}>
-          <ProgressIndicator steps={3} current={2} />
+          <ProgressIndicator steps={4} current={2} />
           <Text
             style={[
               styles.title,
@@ -192,11 +149,12 @@ export default function WidgetSetupScreen() {
       </ScrollView>
 
       <View style={styles.footer}>
-        <Button
-          label="start focusing"
-          onPress={handleFinish}
-          loading={loading}
-        />
+        <Button label="continue" onPress={handleContinue} />
+        <Pressable onPress={handleUseDefaults} style={styles.skipBtn}>
+          <Text style={[styles.skipText, { color: colors.mutedForeground, fontFamily: fonts.body }]}>
+            use defaults
+          </Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
@@ -263,5 +221,8 @@ const styles = StyleSheet.create({
   footer: {
     padding: 24,
     paddingTop: 8,
+    gap: 12,
   },
+  skipBtn: { alignItems: 'center', paddingVertical: 8 },
+  skipText: { fontSize: 13, textTransform: 'lowercase' },
 });
