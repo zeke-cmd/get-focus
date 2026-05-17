@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useFocusEffect } from 'expo-router';
 import {
   View,
   Text,
@@ -25,6 +26,8 @@ import {
 } from 'lucide-react-native';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
+import { SkeletonList } from '../../components/ui/Skeleton';
+import { SwipeToDelete } from '../../components/ui/SwipeToDelete';
 import { haptic } from '../../lib/haptics';
 import { randomUUID } from 'expo-crypto';
 
@@ -43,6 +46,7 @@ export default function BookmarksScreen() {
   const db = useDatabase();
   const router = useRouter();
   const [list, setList] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<Category>('all');
 
@@ -61,11 +65,19 @@ export default function BookmarksScreen() {
       );
     }
     setList(rows);
+    setLoading(false);
   }, [category, search]);
 
   useEffect(() => {
     load();
   }, [load]);
+
+  // Reload when coming back from edit modal
+  useFocusEffect(
+    useCallback(() => {
+      load();
+    }, [load])
+  );
 
   const toggleFavorite = async (id: string, current: boolean) => {
     haptic.light();
@@ -157,44 +169,49 @@ export default function BookmarksScreen() {
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => (
-          <View style={[styles.bookmarkCard, { borderColor: colors.border }]}>
-            <View style={styles.bookmarkTop}>
-              <View style={styles.bookmarkInfo}>
-                <Text
-                  style={[styles.bookmarkTitle, { color: colors.foreground, fontFamily: fonts.body }]}
-                  numberOfLines={1}
-                >
-                  {item.title}
-                </Text>
-                <Text
-                  style={[styles.bookmarkUrl, { color: colors.mutedForeground, fontFamily: fonts.body }]}
-                  numberOfLines={1}
-                >
-                  {item.url}
-                </Text>
+          <SwipeToDelete onDelete={() => deleteBookmark(item.id)}>
+            <Pressable
+              style={[styles.bookmarkCard, { borderColor: colors.border }]}
+              onPress={() => {
+                haptic.light();
+                router.push({ pathname: '/(modals)/bookmark-detail', params: { id: item.id } });
+              }}
+            >
+              <View style={styles.bookmarkTop}>
+                <View style={styles.bookmarkInfo}>
+                  <Text
+                    style={[styles.bookmarkTitle, { color: colors.foreground, fontFamily: fonts.body }]}
+                    numberOfLines={1}
+                  >
+                    {item.title}
+                  </Text>
+                  <Text
+                    style={[styles.bookmarkUrl, { color: colors.mutedForeground, fontFamily: fonts.body }]}
+                    numberOfLines={1}
+                  >
+                    {item.url}
+                  </Text>
+                </View>
+                <View style={styles.bookmarkActions}>
+                  <Pressable onPress={(e) => { e.stopPropagation(); toggleFavorite(item.id, item.isFavorite); }} hitSlop={8}>
+                    <Star
+                      size={16}
+                      color={item.isFavorite ? colors.foreground : colors.mutedForeground}
+                      fill={item.isFavorite ? colors.foreground : 'none'}
+                      strokeWidth={1.5}
+                    />
+                  </Pressable>
+                  <Pressable onPress={(e) => { e.stopPropagation(); openUrl(item.url); }} hitSlop={8}>
+                    <ExternalLink size={16} color={colors.mutedForeground} strokeWidth={1.5} />
+                  </Pressable>
+                </View>
               </View>
-              <View style={styles.bookmarkActions}>
-                <Pressable onPress={() => toggleFavorite(item.id, item.isFavorite)} hitSlop={8}>
-                  <Star
-                    size={16}
-                    color={item.isFavorite ? colors.foreground : colors.mutedForeground}
-                    fill={item.isFavorite ? colors.foreground : 'none'}
-                    strokeWidth={1.5}
-                  />
-                </Pressable>
-                <Pressable onPress={() => openUrl(item.url)} hitSlop={8}>
-                  <ExternalLink size={16} color={colors.mutedForeground} strokeWidth={1.5} />
-                </Pressable>
-                <Pressable onPress={() => deleteBookmark(item.id)} hitSlop={8}>
-                  <Trash2 size={14} color={colors.mutedForeground} strokeWidth={1.5} />
-                </Pressable>
+              <View style={styles.bookmarkMeta}>
+                <Badge label={item.category} variant="outline" />
+                {item.isRead && <Badge label="read" variant="muted" />}
               </View>
-            </View>
-            <View style={styles.bookmarkMeta}>
-              <Badge label={item.category} variant="outline" />
-              {item.isRead && <Badge label="read" variant="muted" />}
-            </View>
-          </View>
+            </Pressable>
+          </SwipeToDelete>
         )}
         ListEmptyComponent={
           <View style={styles.empty}>
@@ -213,6 +230,8 @@ export default function BookmarksScreen() {
           haptic.light();
           router.push('/(modals)/bookmark-detail');
         }}
+        accessibilityLabel="add bookmark"
+        accessibilityRole="button"
       >
         <Plus size={22} color={colors.background} strokeWidth={2} />
       </Pressable>

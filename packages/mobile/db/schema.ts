@@ -24,6 +24,7 @@ export const tasks = sqliteTable('tasks', {
   dueDate: text('due_date'),
   priority: text('priority').notNull().default('medium'),
   tags: text('tags').notNull().default('[]'),
+  notes: text('notes'),
   isPending: integer('is_pending', { mode: 'boolean' }).notNull().default(true),
   sortOrder: integer('sort_order').notNull().default(0),
   createdAt: text('created_at').notNull(),

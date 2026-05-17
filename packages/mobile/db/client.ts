@@ -40,6 +40,7 @@ export function DatabaseProvider({ children }: { children: React.ReactNode }) {
           due_date TEXT,
           priority TEXT NOT NULL DEFAULT 'medium',
           tags TEXT NOT NULL DEFAULT '[]',
+          notes TEXT,
           is_pending INTEGER NOT NULL DEFAULT 1,
           sort_order INTEGER NOT NULL DEFAULT 0,
           created_at TEXT NOT NULL,
@@ -148,6 +149,13 @@ export function DatabaseProvider({ children }: { children: React.ReactNode }) {
 
         INSERT OR IGNORE INTO pomodoro_settings (id) VALUES (1);
       `);
+
+      // Migrations for existing databases
+      try {
+        expoDb.execSync(`ALTER TABLE tasks ADD COLUMN notes TEXT;`);
+      } catch {
+        // Column already exists — ignore
+      }
 
       setReady(true);
     }

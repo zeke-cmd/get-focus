@@ -51,7 +51,7 @@ export default function TaskDetailModal() {
         setTitle(t.title);
         setPriority(t.priority as Priority);
         setDueDate(t.dueDate || '');
-        setNotes(t.time || '');
+        setNotes(t.notes || t.time || '');
         try {
           setTags(JSON.parse(t.tags));
         } catch {
@@ -79,7 +79,7 @@ export default function TaskDetailModal() {
         priority,
         dueDate: dueDate || null,
         tags: JSON.stringify(tags),
-        time: notes.trim() || null,
+        notes: notes.trim() || null,
       }).where(eq(tasks.id, id!));
     } else {
       await db.insert(tasks).values({
@@ -88,7 +88,7 @@ export default function TaskDetailModal() {
         priority,
         dueDate: dueDate || null,
         tags: JSON.stringify(tags),
-        time: notes.trim() || null,
+        notes: notes.trim() || null,
         completed: false,
         isPending: true,
         sortOrder: 0,

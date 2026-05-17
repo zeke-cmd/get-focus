@@ -105,6 +105,7 @@ export function GreetingSection() {
 const styles = StyleSheet.create({
   container: {
     gap: 4,
+    flex: 1,
   },
   greeting: {
     fontSize: 28,

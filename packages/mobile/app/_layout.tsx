@@ -10,6 +10,7 @@ import { DatabaseProvider } from '../db/client';
 import { isOnboardingComplete } from '../lib/storage';
 import { isPinEnabled, verifyPin, isBiometricEnabled, authenticateWithBiometric } from '../lib/pin';
 import { useRouter, useSegments } from 'expo-router';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -189,24 +190,26 @@ export default function RootLayout() {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeAreaProvider>
-      <ThemeProvider>
-        <DatabaseProvider>
-          <PinGate>
-            <NavigationGuard>
-              <ThemedStatusBar />
-              <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="(onboarding)" />
-                <Stack.Screen name="(tabs)" />
-                <Stack.Screen
-                  name="(modals)"
-                  options={{ presentation: 'modal' }}
-                />
-              </Stack>
-            </NavigationGuard>
-          </PinGate>
-        </DatabaseProvider>
-      </ThemeProvider>
-    </SafeAreaProvider>
+    <ErrorBoundary level="global">
+      <SafeAreaProvider>
+        <ThemeProvider>
+          <DatabaseProvider>
+            <PinGate>
+              <NavigationGuard>
+                <ThemedStatusBar />
+                <Stack screenOptions={{ headerShown: false }}>
+                  <Stack.Screen name="(onboarding)" />
+                  <Stack.Screen name="(tabs)" />
+                  <Stack.Screen
+                    name="(modals)"
+                    options={{ presentation: 'modal' }}
+                  />
+                </Stack>
+              </NavigationGuard>
+            </PinGate>
+          </DatabaseProvider>
+        </ThemeProvider>
+      </SafeAreaProvider>
+    </ErrorBoundary>
   );
 }
