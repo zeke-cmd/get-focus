@@ -115,7 +115,7 @@ export function CalendarAgenda() {
                     current && { backgroundColor: colors.muted },
                   ]}
                 >
-                  <View style={[styles.timeDot, { backgroundColor: current ? colors.foreground : colors.border }]} />
+                  <View style={[styles.timeDot, { backgroundColor: current ? colors.primary : colors.border }]} />
                   <View style={styles.eventContent}>
                     <Text
                       style={[

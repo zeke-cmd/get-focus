@@ -154,7 +154,7 @@ export default function TaskDetailModal() {
                 style={[
                   styles.priorityBtn,
                   {
-                    backgroundColor: priority === p.key ? colors.foreground : 'transparent',
+                    backgroundColor: priority === p.key ? colors.primary : 'transparent',
                     borderColor: colors.border,
                   },
                 ]}
@@ -167,7 +167,7 @@ export default function TaskDetailModal() {
                   style={[
                     styles.priorityText,
                     {
-                      color: priority === p.key ? colors.background : colors.mutedForeground,
+                      color: priority === p.key ? colors.primaryForeground : colors.mutedForeground,
                       fontFamily: fonts.body,
                     },
                   ]}
@@ -215,7 +215,7 @@ export default function TaskDetailModal() {
                 style={[
                   styles.tagChip,
                   {
-                    backgroundColor: tags.includes(tag) ? colors.foreground : 'transparent',
+                    backgroundColor: tags.includes(tag) ? colors.primary : 'transparent',
                     borderColor: colors.border,
                   },
                 ]}
@@ -225,7 +225,7 @@ export default function TaskDetailModal() {
                   style={[
                     styles.tagText,
                     {
-                      color: tags.includes(tag) ? colors.background : colors.mutedForeground,
+                      color: tags.includes(tag) ? colors.primaryForeground : colors.mutedForeground,
                       fontFamily: fonts.body,
                     },
                   ]}
@@ -264,7 +264,7 @@ export default function TaskDetailModal() {
         <Pressable
           style={[
             styles.saveBtn,
-            { backgroundColor: title.trim() ? colors.foreground : colors.muted },
+            { backgroundColor: title.trim() ? colors.primary : colors.muted },
           ]}
           onPress={handleSave}
           disabled={!title.trim()}
@@ -272,7 +272,7 @@ export default function TaskDetailModal() {
           <Text
             style={[
               styles.saveBtnText,
-              { color: title.trim() ? colors.background : colors.mutedForeground, fontFamily: fonts.heading },
+              { color: title.trim() ? colors.primaryForeground : colors.mutedForeground, fontFamily: fonts.heading },
             ]}
           >
             {isEdit ? 'update task' : 'add task'}

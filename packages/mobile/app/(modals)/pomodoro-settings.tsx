@@ -180,10 +180,10 @@ export default function PomodoroSettingsModal() {
         />
 
         <Pressable
-          style={[styles.saveBtn, { backgroundColor: colors.foreground }]}
+          style={[styles.saveBtn, { backgroundColor: colors.primary }]}
           onPress={save}
         >
-          <Text style={[styles.saveBtnText, { color: colors.background, fontFamily: fonts.heading }]}>
+          <Text style={[styles.saveBtnText, { color: colors.primaryForeground, fontFamily: fonts.heading }]}>
             save settings
           </Text>
         </Pressable>

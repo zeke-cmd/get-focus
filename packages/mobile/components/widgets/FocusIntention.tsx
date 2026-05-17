@@ -89,10 +89,10 @@ export function FocusIntention() {
             <View style={styles.actions}>
               {!saved.completed && (
                 <Pressable
-                  style={[styles.actionBtn, { backgroundColor: colors.foreground }]}
+                  style={[styles.actionBtn, { backgroundColor: colors.primary }]}
                   onPress={handleComplete}
                 >
-                  <Check size={16} color={colors.background} strokeWidth={2} />
+                  <Check size={16} color={colors.primaryForeground} strokeWidth={2} />
                 </Pressable>
               )}
               <Pressable
@@ -125,7 +125,7 @@ export function FocusIntention() {
               style={[
                 styles.setBtn,
                 {
-                  backgroundColor: input.trim() ? colors.foreground : colors.muted,
+                  backgroundColor: input.trim() ? colors.primary : colors.muted,
                 },
               ]}
               onPress={handleSet}
@@ -135,7 +135,7 @@ export function FocusIntention() {
                 style={[
                   styles.setBtnText,
                   {
-                    color: input.trim() ? colors.background : colors.mutedForeground,
+                    color: input.trim() ? colors.primaryForeground : colors.mutedForeground,
                     fontFamily: fonts.body,
                   },
                 ]}

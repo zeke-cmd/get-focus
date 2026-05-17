@@ -119,7 +119,7 @@ export default function ProfileScreen() {
                     style={[
                       styles.themeBtn,
                       {
-                        backgroundColor: mode === t.key ? colors.foreground : 'transparent',
+                        backgroundColor: mode === t.key ? colors.primary : 'transparent',
                         borderColor: colors.border,
                       },
                     ]}
@@ -130,7 +130,7 @@ export default function ProfileScreen() {
                       style={[
                         styles.themeBtnText,
                         {
-                          color: mode === t.key ? colors.background : colors.mutedForeground,
+                          color: mode === t.key ? colors.primaryForeground : colors.mutedForeground,
                           fontFamily: fonts.body,
                         },
                       ]}
@@ -160,7 +160,7 @@ export default function ProfileScreen() {
                   style={[
                     styles.quoteOption,
                     {
-                      backgroundColor: quoteSource === q.key ? colors.foreground : 'transparent',
+                      backgroundColor: quoteSource === q.key ? colors.primary : 'transparent',
                       borderColor: colors.border,
                     },
                   ]}
@@ -170,7 +170,7 @@ export default function ProfileScreen() {
                     style={[
                       styles.quoteOptionText,
                       {
-                        color: quoteSource === q.key ? colors.background : colors.foreground,
+                        color: quoteSource === q.key ? colors.primaryForeground : colors.foreground,
                         fontFamily: fonts.body,
                       },
                     ]}

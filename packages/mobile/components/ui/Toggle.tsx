@@ -28,7 +28,7 @@ export function Toggle({ value, onValueChange, disabled }: ToggleProps) {
 
   const bgColor = anim.interpolate({
     inputRange: [0, 1],
-    outputRange: [colors.muted, colors.foreground],
+    outputRange: [colors.muted, colors.primary],
   });
 
   return (
@@ -45,7 +45,7 @@ export function Toggle({ value, onValueChange, disabled }: ToggleProps) {
           style={[
             styles.thumb,
             {
-              backgroundColor: value ? colors.background : colors.foreground,
+              backgroundColor: value ? colors.primaryForeground : colors.foreground,
               transform: [{ translateX }],
             },
           ]}

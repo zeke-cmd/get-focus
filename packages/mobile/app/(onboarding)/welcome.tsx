@@ -26,10 +26,10 @@ export default function WelcomeScreen() {
         </Text>
       </View>
       <Pressable
-        style={[styles.button, { backgroundColor: colors.foreground }]}
+        style={[styles.button, { backgroundColor: colors.primary }]}
         onPress={() => router.push('/(onboarding)/personal-info')}
       >
-        <Text style={[styles.buttonText, { color: colors.background, fontFamily: fonts.body }]}>
+        <Text style={[styles.buttonText, { color: colors.primaryForeground, fontFamily: fonts.body }]}>
           begin
         </Text>
       </Pressable>

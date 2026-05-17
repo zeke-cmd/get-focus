@@ -88,7 +88,7 @@ export default function GymExerciseModal() {
                 style={[
                   styles.catBtn,
                   {
-                    backgroundColor: category === c.key ? colors.foreground : 'transparent',
+                    backgroundColor: category === c.key ? colors.primary : 'transparent',
                     borderColor: colors.border,
                   },
                 ]}
@@ -101,7 +101,7 @@ export default function GymExerciseModal() {
                   style={[
                     styles.catText,
                     {
-                      color: category === c.key ? colors.background : colors.mutedForeground,
+                      color: category === c.key ? colors.primaryForeground : colors.mutedForeground,
                       fontFamily: fonts.body,
                     },
                   ]}
@@ -117,7 +117,7 @@ export default function GymExerciseModal() {
         <Pressable
           style={[
             styles.saveBtn,
-            { backgroundColor: name.trim() ? colors.foreground : colors.muted },
+            { backgroundColor: name.trim() ? colors.primary : colors.muted },
           ]}
           onPress={handleSave}
           disabled={!name.trim()}
@@ -125,7 +125,7 @@ export default function GymExerciseModal() {
           <Text
             style={[
               styles.saveBtnText,
-              { color: name.trim() ? colors.background : colors.mutedForeground, fontFamily: fonts.heading },
+              { color: name.trim() ? colors.primaryForeground : colors.mutedForeground, fontFamily: fonts.heading },
             ]}
           >
             add exercise

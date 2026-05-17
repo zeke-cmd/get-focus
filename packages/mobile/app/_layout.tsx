@@ -96,7 +96,7 @@ function PinGate({ children }: { children: React.ReactNode }) {
             style={[
               pinStyles.dot,
               {
-                backgroundColor: i < pin.length ? colors.foreground : 'transparent',
+                backgroundColor: i < pin.length ? colors.primary : 'transparent',
                 borderColor: colors.border,
               },
             ]}

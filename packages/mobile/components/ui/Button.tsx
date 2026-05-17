@@ -42,24 +42,24 @@ export function Button({
   const { colors } = useTheme();
 
   const bg: Record<Variant, string> = {
-    default: colors.foreground,
+    default: colors.primary,
     outline: 'transparent',
     ghost: 'transparent',
-    destructive: colors.foreground,
+    destructive: colors.primary,
   };
 
   const fg: Record<Variant, string> = {
-    default: colors.background,
+    default: colors.primaryForeground,
     outline: colors.foreground,
     ghost: colors.foreground,
-    destructive: colors.background,
+    destructive: colors.primaryForeground,
   };
 
   const borderColor: Record<Variant, string> = {
-    default: colors.foreground,
+    default: colors.primary,
     outline: colors.border,
     ghost: 'transparent',
-    destructive: colors.foreground,
+    destructive: colors.primary,
   };
 
   const handlePress = (e: any) => {

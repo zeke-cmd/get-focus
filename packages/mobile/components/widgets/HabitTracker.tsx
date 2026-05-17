@@ -128,10 +128,10 @@ export function HabitTracker() {
               autoFocus
             />
             <Pressable
-              style={[styles.addBtn, { backgroundColor: colors.foreground }]}
+              style={[styles.addBtn, { backgroundColor: colors.primary }]}
               onPress={addHabit}
             >
-              <Plus size={16} color={colors.background} strokeWidth={2} />
+              <Plus size={16} color={colors.primaryForeground} strokeWidth={2} />
             </Pressable>
           </View>
         )}
@@ -189,7 +189,7 @@ export function HabitTracker() {
                       style={[
                         styles.dot,
                         {
-                          backgroundColor: checked ? colors.foreground : 'transparent',
+                          backgroundColor: checked ? colors.primary : 'transparent',
                           borderColor: colors.border,
                         },
                       ]}

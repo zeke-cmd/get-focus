@@ -135,10 +135,10 @@ export function DatePicker({ label, value, onValueChange, placeholder = 'select 
             </View>
 
             <Pressable
-              style={[styles.confirm, { backgroundColor: colors.foreground }]}
+              style={[styles.confirm, { backgroundColor: colors.primary }]}
               onPress={handleConfirm}
             >
-              <Text style={[styles.confirmText, { color: colors.background, fontFamily: fonts.body }]}>
+              <Text style={[styles.confirmText, { color: colors.primaryForeground, fontFamily: fonts.body }]}>
                 confirm
               </Text>
             </Pressable>

@@ -120,7 +120,7 @@ export function TaskManagement() {
               style={[
                 styles.tab,
                 {
-                  backgroundColor: tab === t.key ? colors.foreground : 'transparent',
+                  backgroundColor: tab === t.key ? colors.primary : 'transparent',
                   borderColor: colors.border,
                 },
               ]}
@@ -133,7 +133,7 @@ export function TaskManagement() {
                 style={[
                   styles.tabText,
                   {
-                    color: tab === t.key ? colors.background : colors.mutedForeground,
+                    color: tab === t.key ? colors.primaryForeground : colors.mutedForeground,
                     fontFamily: fonts.body,
                   },
                 ]}
@@ -164,10 +164,10 @@ export function TaskManagement() {
               returnKeyType="done"
             />
             <Pressable
-              style={[styles.addBtn, { backgroundColor: colors.foreground }]}
+              style={[styles.addBtn, { backgroundColor: colors.primary }]}
               onPress={addTask}
             >
-              <Plus size={18} color={colors.background} strokeWidth={2} />
+              <Plus size={18} color={colors.primaryForeground} strokeWidth={2} />
             </Pressable>
           </View>
         )}
@@ -189,12 +189,12 @@ export function TaskManagement() {
                     styles.checkbox,
                     {
                       borderColor: colors.border,
-                      backgroundColor: task.completed ? colors.foreground : 'transparent',
+                      backgroundColor: task.completed ? colors.primary : 'transparent',
                     },
                   ]}
                   onPress={() => toggleTask(task.id, task.completed)}
                 >
-                  {task.completed && <Check size={12} color={colors.background} strokeWidth={2} />}
+                  {task.completed && <Check size={12} color={colors.primaryForeground} strokeWidth={2} />}
                 </Pressable>
                 <Text
                   style={[
