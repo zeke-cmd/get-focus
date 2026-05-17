@@ -57,8 +57,7 @@ export default function WidgetSetupScreen() {
   const handleFinish = async () => {
     setLoading(true);
     try {
-      // save user profile
-      await db.insert(userProfile).values({
+      const profileValues = {
         id: 1,
         name: params.name || 'user',
         dob: params.dob || '2000-01-01',
@@ -66,16 +65,36 @@ export default function WidgetSetupScreen() {
         email: params.email || null,
         analyticsConsent: params.analyticsConsent === '1',
         createdAt: new Date().toISOString(),
-      });
+      };
+      await db
+        .insert(userProfile)
+        .values(profileValues)
+        .onConflictDoUpdate({
+          target: userProfile.id,
+          set: {
+            name: profileValues.name,
+            dob: profileValues.dob,
+            gender: profileValues.gender,
+            email: profileValues.email,
+            analyticsConsent: profileValues.analyticsConsent,
+          },
+        });
 
       // save widget preferences
       for (let i = 0; i < WIDGETS.length; i++) {
         const w = WIDGETS[i];
-        await db.insert(widgetPreferences).values({
+        const prefValues = {
           id: w.id,
           enabled: enabled[w.id] ?? true,
           sortOrder: i,
-        });
+        };
+        await db
+          .insert(widgetPreferences)
+          .values(prefValues)
+          .onConflictDoUpdate({
+            target: widgetPreferences.id,
+            set: { enabled: prefValues.enabled, sortOrder: prefValues.sortOrder },
+          });
       }
 
       // mark onboarding complete
