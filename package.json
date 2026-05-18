@@ -1,32 +1,21 @@
 {
-  "name": "sandbox-app-template",
+  "name": "get-focus",
   "private": true,
   "packageManager": "bun@1.3.5",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "dev": "cd packages/web && bunx vite",
-    "dev:desktop": "cd packages/desktop && bunx vite",
-    "dev:mobile": "cd packages/mobile && bunx expo start",
-    "build": "turbo build",
-    "typecheck": "turbo typecheck",
-    "db:generate": "turbo db:generate",
-    "db:migrate": "turbo db:migrate",
-    "db:push": "turbo db:push",
-    "db:studio": "turbo db:studio"
+    "dev": "cd packages/mobile && bunx expo start",
+    "android": "cd packages/mobile && bunx expo start --android",
+    "ios": "cd packages/mobile && bunx expo start --ios",
+    "typecheck": "cd packages/mobile && bunx tsc --noEmit",
+    "test": "cd packages/mobile && bunx jest"
   },
   "devDependencies": {
-    "@tursodatabase/api": "^1.9.2",
-    "@types/bun": "latest",
-    "turbo": "^2"
+    "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
-  },
-  "dependencies": {
-    "@aws-sdk/client-s3": "^3.1023.0",
-    "@libsql/client": "^0.17.2",
-    "cloudflare": "^5.2.0"
   }
 }
