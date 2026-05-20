@@ -1,5 +1,29 @@
 {
   "expo": {
+    "icon": "./assets/icon.png",
+    "android": {
+      "package": "com.getfocus_z7k2.runable",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#000000"
+      },
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "android.permission.READ_CALENDAR",
+        "android.permission.WRITE_CALENDAR",
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
+      ]
+    },
+    "ios": {
+      "bundleIdentifier": "com.getfocus_z7k2.runable",
+      "supportsTablet": true
+    },
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
     "name": "focus",
     "slug": "get-focus",
     "version": "0.0.1",
@@ -7,24 +31,6 @@
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#000000"
-    },
-    "android": {
-      "package": "com.getfocus_z7k2.runable",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#000000"
-      },
-      "edgeToEdgeEnabled": true
-    },
-    "ios": {
-      "bundleIdentifier": "com.getfocus_z7k2.runable",
-      "supportsTablet": true
-    },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
@@ -43,6 +49,13 @@
       "expo-calendar",
       "expo-local-authentication",
       "expo-document-picker"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "b3506972-85c8-45bc-a42c-4bf8817f6340"
+      }
+    },
+    "owner": "zeke-cmd"
   }
 }

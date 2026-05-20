@@ -1,8 +1,10 @@
 {
-  "cli": {
-    "version": ">= 16.0.0"
-  },
   "build": {
+    "production": {
+      "android": {
+        "buildType": "app-bundle"
+      }
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal"
@@ -12,11 +14,16 @@
         "buildType": "apk"
       },
       "distribution": "internal"
-    },
+    }
+  },
+  "submit": {
     "production": {
-      "android": {
-        "buildType": "app-bundle"
+      "ios": {
+        "ascApiKeyPath": "./keys/AuthKey.p8"
       }
     }
+  },
+  "cli": {
+    "version": ">= 16.0.0"
   }
 }
