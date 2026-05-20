@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet, Alert } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, Alert, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,7 +20,6 @@ import {
   Info,
   ChevronRight,
   RotateCcw,
-  Sparkles,
 } from 'lucide-react-native';
 import { haptic } from '../../lib/haptics';
 import { authenticateForReset } from '../../lib/pin';
@@ -266,7 +265,11 @@ export default function ProfileScreen() {
             v0.0.1 • beta
           </Text>
           <View style={styles.madeWith}>
-            <Sparkles size={12} color={colors.mutedForeground} strokeWidth={1.5} />
+            <Image
+              source={require('../../assets/runable-logo.png')}
+              style={styles.runableLogo}
+              resizeMode="contain"
+            />
             <Text style={[styles.madeWithText, { color: colors.mutedForeground, fontFamily: fonts.body }]}>
               made with runable
             </Text>
@@ -330,4 +333,5 @@ const styles = StyleSheet.create({
   appVersion: { fontSize: 12, textTransform: 'lowercase' },
   madeWith: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 8 },
   madeWithText: { fontSize: 11, textTransform: 'lowercase' },
+  runableLogo: { width: 14, height: 14, borderRadius: 3 },
 });
