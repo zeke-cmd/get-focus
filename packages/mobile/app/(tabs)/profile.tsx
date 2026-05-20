@@ -20,6 +20,7 @@ import {
   Info,
   ChevronRight,
   RotateCcw,
+  Sparkles,
 } from 'lucide-react-native';
 import { haptic } from '../../lib/haptics';
 import { authenticateForReset } from '../../lib/pin';
@@ -262,8 +263,14 @@ export default function ProfileScreen() {
             focus
           </Text>
           <Text style={[styles.appVersion, { color: colors.mutedForeground, fontFamily: fonts.body }]}>
-            v1.0.0 • open source
+            v0.0.1 • beta
           </Text>
+          <View style={styles.madeWith}>
+            <Sparkles size={12} color={colors.mutedForeground} strokeWidth={1.5} />
+            <Text style={[styles.madeWithText, { color: colors.mutedForeground, fontFamily: fonts.body }]}>
+              made with runable
+            </Text>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -321,4 +328,6 @@ const styles = StyleSheet.create({
   appInfo: { alignItems: 'center', paddingVertical: 24, gap: 4 },
   appName: { fontSize: 20 },
   appVersion: { fontSize: 12, textTransform: 'lowercase' },
+  madeWith: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 8 },
+  madeWithText: { fontSize: 11, textTransform: 'lowercase' },
 });
