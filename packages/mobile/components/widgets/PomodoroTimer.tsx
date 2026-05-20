@@ -157,7 +157,7 @@ export function PomodoroTimer() {
               style={[
                 styles.progressFill,
                 {
-                  backgroundColor: colors.foreground,
+                  backgroundColor: colors.primary,
                   width: `${progress * 100}%`,
                 },
               ]}
@@ -187,13 +187,13 @@ export function PomodoroTimer() {
               <RotateCcw size={18} color={colors.foreground} strokeWidth={1.5} />
             </Pressable>
             <Pressable
-              style={[styles.playBtn, { backgroundColor: colors.foreground }]}
+              style={[styles.playBtn, { backgroundColor: colors.primary }]}
               onPress={toggleTimer}
             >
               {running ? (
-                <Pause size={20} color={colors.background} strokeWidth={2} />
+                <Pause size={20} color={colors.primaryForeground} strokeWidth={2} />
               ) : (
-                <Play size={20} color={colors.background} strokeWidth={2} />
+                <Play size={20} color={colors.primaryForeground} strokeWidth={2} />
               )}
             </Pressable>
           </View>

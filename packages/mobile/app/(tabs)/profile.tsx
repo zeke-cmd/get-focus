@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet, Alert } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, Alert, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme, fonts, type ThemeMode } from '../../lib/theme';
-import { useDatabase } from '../../db/client';
+import { useDatabase, resetAllData } from '../../db/client';
 import { userProfile, appSettings } from '../../db/schema';
 import { eq } from 'drizzle-orm';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
@@ -18,8 +19,10 @@ import {
   Upload,
   Info,
   ChevronRight,
+  RotateCcw,
 } from 'lucide-react-native';
 import { haptic } from '../../lib/haptics';
+import { authenticateForReset } from '../../lib/pin';
 import type { QuoteSource } from '../../lib/quote-sources';
 
 export default function ProfileScreen() {
@@ -73,6 +76,28 @@ export default function ProfileScreen() {
     setMode(m);
   };
 
+  const handleReset = () => {
+    haptic.light();
+    Alert.alert(
+      'reset app',
+      'this will erase all data and return to onboarding. this cannot be undone.',
+      [
+        { text: 'cancel', style: 'cancel' },
+        {
+          text: 'reset',
+          style: 'destructive',
+          onPress: async () => {
+            const ok = await authenticateForReset();
+            if (!ok) return;
+            resetAllData();
+            await AsyncStorage.clear();
+            router.replace('/(onboarding)/welcome');
+          },
+        },
+      ],
+    );
+  };
+
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: colors.background }]}
@@ -119,7 +144,7 @@ export default function ProfileScreen() {
                     style={[
                       styles.themeBtn,
                       {
-                        backgroundColor: mode === t.key ? colors.foreground : 'transparent',
+                        backgroundColor: mode === t.key ? colors.primary : 'transparent',
                         borderColor: colors.border,
                       },
                     ]}
@@ -130,7 +155,7 @@ export default function ProfileScreen() {
                       style={[
                         styles.themeBtnText,
                         {
-                          color: mode === t.key ? colors.background : colors.mutedForeground,
+                          color: mode === t.key ? colors.primaryForeground : colors.mutedForeground,
                           fontFamily: fonts.body,
                         },
                       ]}
@@ -160,7 +185,7 @@ export default function ProfileScreen() {
                   style={[
                     styles.quoteOption,
                     {
-                      backgroundColor: quoteSource === q.key ? colors.foreground : 'transparent',
+                      backgroundColor: quoteSource === q.key ? colors.primary : 'transparent',
                       borderColor: colors.border,
                     },
                   ]}
@@ -170,7 +195,7 @@ export default function ProfileScreen() {
                     style={[
                       styles.quoteOptionText,
                       {
-                        color: quoteSource === q.key ? colors.background : colors.foreground,
+                        color: quoteSource === q.key ? colors.primaryForeground : colors.foreground,
                         fontFamily: fonts.body,
                       },
                     ]}
@@ -194,13 +219,10 @@ export default function ProfileScreen() {
                 { icon: Shield, label: 'pin lock', desc: 'secure your app', route: '/(modals)/pin-setup' as const },
                 { icon: Download, label: 'export data', desc: 'save your data as json', route: '/(modals)/export-import' as const },
                 { icon: Upload, label: 'import data', desc: 'restore from backup', route: '/(modals)/export-import' as const },
-              ].map((item, i) => (
+              ].map((item) => (
                 <Pressable
                   key={item.label}
-                  style={[
-                    styles.settingRow,
-                    i < 2 && { borderBottomWidth: 1, borderBottomColor: colors.border },
-                  ]}
+                  style={[styles.settingRow, { borderBottomWidth: 1, borderBottomColor: colors.border }]}
                   onPress={() => {
                     haptic.light();
                     router.push(item.route);
@@ -218,6 +240,18 @@ export default function ProfileScreen() {
                   <ChevronRight size={16} color={colors.mutedForeground} strokeWidth={1.5} />
                 </Pressable>
               ))}
+              <Pressable style={styles.settingRow} onPress={handleReset}>
+                <RotateCcw size={18} color={colors.destructive} strokeWidth={1.5} />
+                <View style={{ flex: 1 }}>
+                  <Text style={[styles.settingLabel, { color: colors.destructive, fontFamily: fonts.body }]}>
+                    reset app
+                  </Text>
+                  <Text style={[styles.settingDesc, { color: colors.mutedForeground, fontFamily: fonts.body }]}>
+                    erase all data and start over
+                  </Text>
+                </View>
+                <ChevronRight size={16} color={colors.mutedForeground} strokeWidth={1.5} />
+              </Pressable>
             </View>
           </CardContent>
         </Card>
@@ -228,8 +262,18 @@ export default function ProfileScreen() {
             focus
           </Text>
           <Text style={[styles.appVersion, { color: colors.mutedForeground, fontFamily: fonts.body }]}>
-            v1.0.0 • open source
+            v0.0.1 • beta
           </Text>
+          <View style={styles.madeWith}>
+            <Image
+              source={require('../../assets/runable-logo.png')}
+              style={styles.runableLogo}
+              resizeMode="contain"
+            />
+            <Text style={[styles.madeWithText, { color: colors.mutedForeground, fontFamily: fonts.body }]}>
+              made with runable
+            </Text>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -287,4 +331,7 @@ const styles = StyleSheet.create({
   appInfo: { alignItems: 'center', paddingVertical: 24, gap: 4 },
   appName: { fontSize: 20 },
   appVersion: { fontSize: 12, textTransform: 'lowercase' },
+  madeWith: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 8 },
+  madeWithText: { fontSize: 11, textTransform: 'lowercase' },
+  runableLogo: { width: 14, height: 14, borderRadius: 3 },
 });

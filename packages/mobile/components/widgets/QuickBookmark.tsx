@@ -45,13 +45,13 @@ export function QuickBookmark() {
           <CardTitle>quick bookmark</CardTitle>
           {!expanded && (
             <Pressable
-              style={[styles.addBtn, { backgroundColor: colors.foreground }]}
+              style={[styles.addBtn, { backgroundColor: colors.primary }]}
               onPress={() => {
                 haptic.light();
                 setExpanded(true);
               }}
             >
-              <Plus size={16} color={colors.background} strokeWidth={2} />
+              <Plus size={16} color={colors.primaryForeground} strokeWidth={2} />
             </Pressable>
           )}
         </View>
@@ -98,14 +98,14 @@ export function QuickBookmark() {
                 </Text>
               </Pressable>
               <Pressable
-                style={[styles.saveBtn, { backgroundColor: url.trim() ? colors.foreground : colors.muted }]}
+                style={[styles.saveBtn, { backgroundColor: url.trim() ? colors.primary : colors.muted }]}
                 onPress={handleSave}
                 disabled={!url.trim()}
               >
                 <Text
                   style={[
                     styles.btnText,
-                    { color: url.trim() ? colors.background : colors.mutedForeground, fontFamily: fonts.body },
+                    { color: url.trim() ? colors.primaryForeground : colors.mutedForeground, fontFamily: fonts.body },
                   ]}
                 >
                   save

@@ -368,11 +368,11 @@ export default function GymWorkoutModal() {
         {/* Finish */}
         {exercises.length > 0 && (
           <Pressable
-            style={[styles.finishBtn, { backgroundColor: colors.foreground }]}
+            style={[styles.finishBtn, { backgroundColor: colors.primary }]}
             onPress={finishWorkout}
           >
-            <Check size={18} color={colors.background} strokeWidth={2} />
-            <Text style={[styles.finishText, { color: colors.background, fontFamily: fonts.heading }]}>
+            <Check size={18} color={colors.primaryForeground} strokeWidth={2} />
+            <Text style={[styles.finishText, { color: colors.primaryForeground, fontFamily: fonts.heading }]}>
               finish workout
             </Text>
           </Pressable>

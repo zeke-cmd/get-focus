@@ -120,7 +120,7 @@ export default function GymScreen() {
             style={[
               styles.tab,
               {
-                backgroundColor: tab === t.key ? colors.foreground : 'transparent',
+                backgroundColor: tab === t.key ? colors.primary : 'transparent',
                 borderColor: colors.border,
               },
             ]}
@@ -133,7 +133,7 @@ export default function GymScreen() {
               style={[
                 styles.tabText,
                 {
-                  color: tab === t.key ? colors.background : colors.mutedForeground,
+                  color: tab === t.key ? colors.primaryForeground : colors.mutedForeground,
                   fontFamily: fonts.body,
                 },
               ]}
@@ -230,11 +230,11 @@ export default function GymScreen() {
           <>
             <View style={styles.exerciseHeader}>
               <Pressable
-                style={[styles.addExBtn, { backgroundColor: colors.foreground }]}
+                style={[styles.addExBtn, { backgroundColor: colors.primary }]}
                 onPress={() => setShowAddExercise(!showAddExercise)}
               >
-                <Plus size={16} color={colors.background} strokeWidth={2} />
-                <Text style={[styles.addExText, { color: colors.background, fontFamily: fonts.body }]}>
+                <Plus size={16} color={colors.primaryForeground} strokeWidth={2} />
+                <Text style={[styles.addExText, { color: colors.primaryForeground, fontFamily: fonts.body }]}>
                   add exercise
                 </Text>
               </Pressable>
@@ -262,7 +262,7 @@ export default function GymScreen() {
                           style={[
                             styles.catChip,
                             {
-                              backgroundColor: newCategory === c ? colors.foreground : 'transparent',
+                              backgroundColor: newCategory === c ? colors.primary : 'transparent',
                               borderColor: colors.border,
                             },
                           ]}
@@ -272,7 +272,7 @@ export default function GymScreen() {
                             style={[
                               styles.catChipText,
                               {
-                                color: newCategory === c ? colors.background : colors.mutedForeground,
+                                color: newCategory === c ? colors.primaryForeground : colors.mutedForeground,
                                 fontFamily: fonts.body,
                               },
                             ]}

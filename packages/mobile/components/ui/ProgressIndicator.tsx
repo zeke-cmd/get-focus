@@ -17,7 +17,7 @@ export function ProgressIndicator({ steps, current }: ProgressIndicatorProps) {
           style={[
             styles.dot,
             {
-              backgroundColor: i <= current ? colors.foreground : colors.border,
+              backgroundColor: i <= current ? colors.primary : colors.border,
             },
           ]}
         />

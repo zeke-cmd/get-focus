@@ -42,9 +42,8 @@ export default function PersonalInfoScreen() {
 
   const handleNext = () => {
     if (!validate()) return;
-    // pass data via params — will save in widget-setup screen
     router.push({
-      pathname: '/(onboarding)/consent',
+      pathname: '/(onboarding)/pin-setup',
       params: { name: name.trim(), dob, gender },
     });
   };
@@ -63,7 +62,7 @@ export default function PersonalInfoScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <View style={styles.header}>
-            <ProgressIndicator steps={3} current={0} />
+            <ProgressIndicator steps={4} current={0} />
             <Text
               style={[
                 styles.title,

@@ -126,18 +126,18 @@ export function DailyJournal() {
             style={[
               styles.saveBtn,
               {
-                backgroundColor: saved ? colors.muted : colors.foreground,
+                backgroundColor: saved ? colors.muted : colors.primary,
               },
             ]}
             onPress={saveEntry}
             disabled={saved || !content.trim()}
           >
-            <Save size={14} color={saved ? colors.mutedForeground : colors.background} strokeWidth={1.5} />
+            <Save size={14} color={saved ? colors.mutedForeground : colors.primaryForeground} strokeWidth={1.5} />
             <Text
               style={[
                 styles.saveBtnText,
                 {
-                  color: saved ? colors.mutedForeground : colors.background,
+                  color: saved ? colors.mutedForeground : colors.primaryForeground,
                   fontFamily: fonts.body,
                 },
               ]}

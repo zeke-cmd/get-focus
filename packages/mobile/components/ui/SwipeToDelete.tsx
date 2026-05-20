@@ -68,11 +68,11 @@ export function SwipeToDelete({ children, onDelete, enabled = true }: SwipeToDel
       <Animated.View
         style={[
           styles.deleteArea,
-          { backgroundColor: colors.foreground, opacity: deleteOpacity },
+          { backgroundColor: colors.primary, opacity: deleteOpacity },
         ]}
       >
-        <Trash2 size={18} color={colors.background} strokeWidth={1.5} />
-        <Text style={[styles.deleteText, { color: colors.background, fontFamily: fonts.body }]}>
+        <Trash2 size={18} color={colors.primaryForeground} strokeWidth={1.5} />
+        <Text style={[styles.deleteText, { color: colors.primaryForeground, fontFamily: fonts.body }]}>
           delete
         </Text>
       </Animated.View>

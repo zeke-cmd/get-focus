@@ -57,3 +57,15 @@ export async function authenticateWithBiometric(): Promise<boolean> {
   });
   return result.success;
 }
+
+export async function authenticateForReset(): Promise<boolean> {
+  const compatible = await LocalAuthentication.hasHardwareAsync();
+  const enrolled = await LocalAuthentication.isEnrolledAsync();
+  if (!compatible || !enrolled) return true;
+  const result = await LocalAuthentication.authenticateAsync({
+    promptMessage: 'authenticate to reset all data',
+    fallbackLabel: 'use device pin',
+    disableDeviceFallback: false,
+  });
+  return result.success;
+}

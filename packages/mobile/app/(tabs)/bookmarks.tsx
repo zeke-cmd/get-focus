@@ -139,7 +139,7 @@ export default function BookmarksScreen() {
             style={[
               styles.catTab,
               {
-                backgroundColor: category === c.key ? colors.foreground : 'transparent',
+                backgroundColor: category === c.key ? colors.primary : 'transparent',
                 borderColor: colors.border,
               },
             ]}
@@ -152,7 +152,7 @@ export default function BookmarksScreen() {
               style={[
                 styles.catText,
                 {
-                  color: category === c.key ? colors.background : colors.mutedForeground,
+                  color: category === c.key ? colors.primaryForeground : colors.mutedForeground,
                   fontFamily: fonts.body,
                 },
               ]}
@@ -225,7 +225,7 @@ export default function BookmarksScreen() {
 
       {/* FAB */}
       <Pressable
-        style={[styles.fab, { backgroundColor: colors.foreground }]}
+        style={[styles.fab, { backgroundColor: colors.primary }]}
         onPress={() => {
           haptic.light();
           router.push('/(modals)/bookmark-detail');
@@ -233,7 +233,7 @@ export default function BookmarksScreen() {
         accessibilityLabel="add bookmark"
         accessibilityRole="button"
       >
-        <Plus size={22} color={colors.background} strokeWidth={2} />
+        <Plus size={22} color={colors.primaryForeground} strokeWidth={2} />
       </Pressable>
     </SafeAreaView>
   );

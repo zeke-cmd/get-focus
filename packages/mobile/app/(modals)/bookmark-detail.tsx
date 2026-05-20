@@ -169,7 +169,7 @@ export default function BookmarkDetailModal() {
                 style={[
                   styles.catBtn,
                   {
-                    backgroundColor: category === c.key ? colors.foreground : 'transparent',
+                    backgroundColor: category === c.key ? colors.primary : 'transparent',
                     borderColor: colors.border,
                   },
                 ]}
@@ -182,7 +182,7 @@ export default function BookmarkDetailModal() {
                   style={[
                     styles.catText,
                     {
-                      color: category === c.key ? colors.background : colors.mutedForeground,
+                      color: category === c.key ? colors.primaryForeground : colors.mutedForeground,
                       fontFamily: fonts.body,
                     },
                   ]}
@@ -221,7 +221,7 @@ export default function BookmarkDetailModal() {
         <Pressable
           style={[
             styles.saveBtn,
-            { backgroundColor: url.trim() ? colors.foreground : colors.muted },
+            { backgroundColor: url.trim() ? colors.primary : colors.muted },
           ]}
           onPress={handleSave}
           disabled={!url.trim()}
@@ -229,7 +229,7 @@ export default function BookmarkDetailModal() {
           <Text
             style={[
               styles.saveBtnText,
-              { color: url.trim() ? colors.background : colors.mutedForeground, fontFamily: fonts.heading },
+              { color: url.trim() ? colors.primaryForeground : colors.mutedForeground, fontFamily: fonts.heading },
             ]}
           >
             {isEdit ? 'update bookmark' : 'save bookmark'}

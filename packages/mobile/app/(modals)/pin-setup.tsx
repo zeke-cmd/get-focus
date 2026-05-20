@@ -118,7 +118,7 @@ export default function PinSetupModal() {
           style={[
             styles.dot,
             {
-              backgroundColor: i < value.length ? colors.foreground : 'transparent',
+              backgroundColor: i < value.length ? colors.primary : 'transparent',
               borderColor: colors.border,
             },
           ]}
@@ -164,11 +164,11 @@ export default function PinSetupModal() {
               </Text>
             ) : null}
             <Pressable
-              style={[styles.actionBtn, { backgroundColor: colors.foreground }]}
+              style={[styles.actionBtn, { backgroundColor: colors.primary }]}
               onPress={handleRemovePin}
             >
-              <Trash2 size={16} color={colors.background} strokeWidth={1.5} />
-              <Text style={[styles.actionBtnText, { color: colors.background, fontFamily: fonts.heading }]}>
+              <Trash2 size={16} color={colors.primaryForeground} strokeWidth={1.5} />
+              <Text style={[styles.actionBtnText, { color: colors.primaryForeground, fontFamily: fonts.heading }]}>
                 remove pin
               </Text>
             </Pressable>
@@ -186,7 +186,7 @@ export default function PinSetupModal() {
                   style={[
                     styles.toggle,
                     {
-                      backgroundColor: biometricOn ? colors.foreground : colors.muted,
+                      backgroundColor: biometricOn ? colors.primary : colors.muted,
                       borderColor: colors.border,
                     },
                   ]}
@@ -227,10 +227,10 @@ export default function PinSetupModal() {
               </Text>
             ) : null}
             <Pressable
-              style={[styles.actionBtn, { backgroundColor: colors.foreground }]}
+              style={[styles.actionBtn, { backgroundColor: colors.primary }]}
               onPress={handleSetPin}
             >
-              <Text style={[styles.actionBtnText, { color: colors.background, fontFamily: fonts.heading }]}>
+              <Text style={[styles.actionBtnText, { color: colors.primaryForeground, fontFamily: fonts.heading }]}>
                 {step === 'enter' ? 'next' : 'set pin'}
               </Text>
             </Pressable>
